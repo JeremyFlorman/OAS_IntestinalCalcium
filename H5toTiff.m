@@ -2,12 +2,12 @@
 % of the 30 seconds preceeding each calcium spike. This is useful for 
 % counting pumping rate. 
 
-d = dir('Z:\OAS\5-HT\-Food\unc-31-noFood');
+d = dir('Z:\OAS\5-HT\-Food\eat-2-noFood');
 dirflag= [d(:).isdir];
 d = d(dirflag);
 d = d(3:end);
 
-for j = 7:length(d)
+for j = 1:length(d)
     folder = fullfile(d(j).folder,d(j).name)
 % folder = 'Y:\OAS\5-HT\wildtype+5HT\231006_zfis178_wildtype+5HT_1';
 

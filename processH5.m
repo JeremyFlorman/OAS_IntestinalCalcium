@@ -3,12 +3,12 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
-% foldername = 'C:\src\OpenAutoScope-v2\data\RMG_GCaMP\231102_zfex1234_BS\2023_11_02_15_40_50_flircamera_behavior';
+% foldername = 'C:\src\OpenAutoScope-v2\data\5-HT\231109_zfis178_ser-7+Food\2023_11_09_15_25_23_flircamera_behavior'
 d = dir([foldername '\*.h5']);
-registerImage = 0;
-showRegistration = 0;
-videostuff = 1;
-translation = [1 -1 0];  %230926[-5 13 0];
+registerImage = 1;
+showRegistration = 1;
+videostuff = 0;
+translation = [1 -3 0];  %230926[-5 13 0];
 
 
 for i = 1:length(d)

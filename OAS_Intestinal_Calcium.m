@@ -1,5 +1,5 @@
-fld = 'C:\src\OpenAutoScope-v2\data\5-HT\231107_zfis178_unc-31+5HT'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\OAS\5-HT\+5-HT\unc-31+5HT';  % upload everything to this location.
+fld = 'C:\src\OpenAutoScope-v2\data\5-HT\231109_zfis178_ser-7+Food'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\5-HT\+Food\ser-7+Food';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.
@@ -437,7 +437,7 @@ for nf =startIndex:length(imgDir)
                         ax7.TickLength = [0.005 0.005];
 
                         % Area
-                        plot(time(1:i),smoothdata(area(1:i), 'gaussian', 60), 'Parent', areaAx)                      
+                        plot(time(1:i),smoothdata(area(1:i), 'gaussian', 30), 'Parent', areaAx)                      
                         ylabel(areaAx, 'Worm Area');
                         areaAx.TickLength = [0.005 0.005];
                         box(areaAx, 'off');
@@ -445,7 +445,7 @@ for nf =startIndex:length(imgDir)
 
 
                         % velocity
-                        plot(time(1:i),smoothdata(velocity(1:i),'gaussian', 60), 'Parent', velAx)
+                        plot(time(1:i),smoothdata(velocity(1:i),'gaussian', 30), 'Parent', velAx)
                         if ~isempty(stimTimes)
                             for k =1:length(stimTimes)
                                 if i>= stimTimes(k)
@@ -656,7 +656,7 @@ for nf =startIndex:length(imgDir)
     box off
     % % % Worm Area % % %
     nexttile([1 3]);
-    plot(time,smoothdata(area,'gaussian', 60))
+    plot(time,smoothdata(area,'gaussian', 30))
     xlim([0 time(end)])
     title(gca, 'Worm Area')
     ylabel(gca,'Pixels')

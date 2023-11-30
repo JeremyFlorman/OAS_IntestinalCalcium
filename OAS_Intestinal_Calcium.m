@@ -1,5 +1,5 @@
-fld = 'C:\src\OpenAutoScope-v2\data\5-HT\231109_zfis178_ser-7+Food'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\OAS\5-HT\+Food\ser-7+Food';  % upload everything to this location.
+fld = 'C:\src\OpenAutoScope-v2\data\231121_zfex813_wildtype'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\myo-3GCaMP';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.

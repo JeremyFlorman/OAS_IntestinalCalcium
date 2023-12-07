@@ -1,18 +1,18 @@
-fld = 'Y:\OAS\myo-3GCaMP\231121_zfex813_wildtype_2'; % Folder containing the data you want to analyze
-serverfolder = 'Y:\OAS\myo-3GCaMP\231121_zfex813_wildtype_2';  % upload everything to this location.
+fld = 'C:\src\OpenAutoScope-v2\data\myo-3_GCaMP6\231204_zfex813_wildtype-10x+Tap'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\myo-3GCaMP\';  % upload everything to this location.
 
 %% settings
-startIndex = 1; % which video to start analysis.
+startIndex = 5; % which video to start analysis.
 startframe =1; % what frame to begin analysis
 
 uploadresults = 1; % upload data to remote location (serverfolder)?
-isremote = 1;    % is our tiff file on the server? If so, we'll copy to local
+isremote = 0;    % is our tiff file on the server? If so, we'll copy to local
 % folder to run the analysis then move the results to the
 % server.
 
 plotstuff = 1; % display tracking
 videostuff =1; % record video
-framerate = 7; % display video/plots every Nth iteration of loop.
+framerate = 1; % display video/plots every Nth iteration of loop.
 fps = 15;      % frames per sec of input tiff.
 troubleshoot =0; % show binary images instead of0 regular plots
 showNormals = 1;
@@ -29,8 +29,8 @@ removevignette = 30; % if not zero, size of kernel to use for flatfield correcti
 axSigLen = 200; % how many pixels to use for registering axial signal.
 axSigHeight = 20; % how many pixels to use sample perpindicular to the midline.
 saveAxialMatrix = 0;
-seg = 1:30; % what pixels to sample for different muscle quadrents
-axialColorLimits = [10 75];
+seg = 40:60; % what pixels to sample for different muscle quadrents
+axialColorLimits = [0 250];
 
 %%
 imgDir = dir([fld '\**\*behavior\*.h5']);

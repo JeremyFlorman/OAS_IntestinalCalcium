@@ -1,15 +1,17 @@
-imgname = "C:\src\OpenAutoScope-v2\data\RIM_GCaMP6\231206_RIM_GCaMP6\231206_RIM_GCaMP6_1.tif";
+imgname = "C:\src\OpenAutoScope-v2\data\RIM_GCaMP6\231212_RIM_GCaMP6+mec-4Chrimson_10hz\231212_RIM_GCaMP6+mec-4Chrimson_10hz_1.tif";
 
 fpts = strsplit(imgname,'\');
 dataname = strrep(imgname, '.tif','_ratio.xlsx');
 videopath = strrep(imgname, '.tif','_video.mp4');
 data = readmatrix(dataname);
 
-signal = data(:,2);
-velocity = smoothdata(data(:,6), 'gaussian',5);
+% signal = data(:,2);
+
 time = data(:,5);
-f_zero = mean(signal(1:450));
-deltaF = smoothdata((signal-f_zero)/f_zero, 'gaussian',5);
+deltaF = smoothdata(data(:,6),'gaussian',5);
+velocity = smoothdata(data(:,7), 'gaussian',5);
+% f_zero = mean(signal(1:450));
+% deltaF = smoothdata((signal-f_zero)/f_zero, 'gaussian',5);
 % time = linspace(0,length(deltaF)/15,length(deltaF));
 
 

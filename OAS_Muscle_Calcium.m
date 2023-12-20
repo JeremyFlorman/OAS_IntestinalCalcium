@@ -1,8 +1,8 @@
-fld = 'C:\src\OpenAutoScope-v2\data\myo-3_GCaMP6\231204_zfex813_wildtype-10x+Tap'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\OAS\myo-3GCaMP\';  % upload everything to this location.
+fld = 'C:\src\OpenAutoScope-v2\data\acr-2HisCat_myo-3GCaMP6\231219_QW2550+3 0mM-HA'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\HisCat\acr-2HiscatMyo-3GCaMP6\QW2550_0mM-HA';  % upload everything to this location.
 
 %% settings
-startIndex = 5; % which video to start analysis.
+startIndex = 1; % which video to start analysis.
 startframe =1; % what frame to begin analysis
 
 uploadresults = 1; % upload data to remote location (serverfolder)?
@@ -30,7 +30,7 @@ axSigLen = 200; % how many pixels to use for registering axial signal.
 axSigHeight = 20; % how many pixels to use sample perpindicular to the midline.
 saveAxialMatrix = 0;
 seg = 40:60; % what pixels to sample for different muscle quadrents
-axialColorLimits = [0 250];
+axialColorLimits = [0 100];
 
 %%
 imgDir = dir([fld '\**\*behavior\*.h5']);
@@ -714,15 +714,18 @@ for nf =startIndex:length(imgDir)
     xlim(ax,[0 time(end)]);
     xlabel(ax,'Time (min)');
 
-    % % % Peak Widths % % %
+    % % % Worm Track % % % 
     nexttile([1 1])
-    histogram(w./fps,'BinEdges', 1:15);
-    ylim([0 10])
-    xlim([0 15])
-    title(gca,'Peak Widths');
-    ylabel(gca,'Count');
-    xlabel(gca,'Time (s)');
-    box off
+    scatter(h5Data.xLoc, h5Data.yLoc, 1, jet(length(h5Data.yLoc)))
+    % % % Peak Widths % % %
+%     nexttile([1 1])
+%     histogram(w./fps,'BinEdges', 1:15);
+%     ylim([0 10])
+%     xlim([0 15])
+%     title(gca,'Peak Widths');
+%     ylabel(gca,'Count');
+%     xlabel(gca,'Time (s)');
+%     box off
 
 
     % % % Velocity  % % %

@@ -3,12 +3,14 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
-% foldername = 'C:\src\OpenAutoScope-v2\data\myo-3_GCaMP6\231204_zfex813_wildtype-10x+Tap\2023_12_04_15_20_30_flircamera_behavior'
+ foldername = 'C:\src\OpenAutoScope-v2\data\acr-2HisCat_myo-3GCaMP6\231219_QW2550+30mM-HA\2023_12_19_16_14_05_flircamera_behavior'
 d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration = 0;
 videostuff = 0;
-translation = [0 0 0];  %230926[-5 13 0];
+mmPerStep = 0.001253814;
+
+translation = [0 -4 0];  %230926[-5 13 0];
 
 
 for i = 1:length(d)
@@ -94,6 +96,8 @@ acq = 0; % acquires log data within recording range when set to 1;
 stimTimes = [];
 xLoc = NaN(length(time),1);
 yLoc = NaN(length(time),1);
+xflip = 1;
+yflip = 1;
 
 for i = 1:length(logd)
     fid = fopen(fullfile(logd(i).folder, logd(i).name),"r");
@@ -131,9 +135,28 @@ for i = 1:length(logd)
                 locTime = alignEvent(line,time);
                 r = regexp(line,' ', 'split');
                 r = regexp(r{end}, '\d+', 'match');
+                xl = str2double(r{1})*mmPerStep; % X coordinate in mm units
+                yl = str2double(r{2})*mmPerStep; % Y coordinate in mm units
 
-                xLoc(locTime,1) = str2double(r{1});
-                yLoc(locTime,1) = str2double(r{2});
+                % % check for crossing origin % % 
+                if abs(xl)<0.01
+                    if abs(xl)-abs(xLoc(locTime-1,1))>=0
+                        xflip = xflip*-1;
+                    end
+                end
+
+                if abs(yl)<0.01
+                    if abs(yl)-abs(yLoc(locTime-1,1))>=0
+                    yflip = yflip*-1;
+                    end
+                end
+                
+                % % convert orgin crossings to negative coordinates % % 
+                xLoc(locTime,1) = xl*xflip;
+                yLoc(locTime,1) = yl*yflip;
+
+
+
 
             end
         end
@@ -163,6 +186,8 @@ h5Data.time = time;
 h5Data.startime = starttime;
 h5Data.stimTimes =stimTimes;
 h5Data.velocity = velocity;
+h5Data.xLoc = xLoc;
+h5Data.yLoc = yLoc;
 
 end
 

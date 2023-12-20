@@ -1,4 +1,4 @@
-imgname = "C:\src\OpenAutoScope-v2\data\RIM_GCaMP6\231212_RIM_GCaMP6+mec-4Chrimson_10hz\231212_RIM_GCaMP6+mec-4Chrimson_10hz_1.tif";
+imgname = "C:\src\OpenAutoScope-v2\data\Escape_GCaMP6\231213_EscapeGC6_mec4Chrimson_10hz\231213_EscapeGC6_mec4Chrimson_10hz_4.tif";
 
 fpts = strsplit(imgname,'\');
 dataname = strrep(imgname, '.tif','_ratio.xlsx');

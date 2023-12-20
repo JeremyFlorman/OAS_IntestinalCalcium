@@ -1,7 +1,7 @@
 %% this function converts H5 videos from OAS to side-by-side tiff files,
 % similar to optosplit recordings
 
-fld = 'C:\src\OpenAutoScope-v2\data\RIM_GCaMP6\231212_RIM_GCaMP6+mec-4Chrimson_10hz'
+fld = 'C:\src\OpenAutoScope-v2\data\acr-2HisCat_myo-3GCaMP6\231219_QW2549+30mM-HA'
 
 
 imgDir = dir([fld '\**\*behavior\*.h5']);

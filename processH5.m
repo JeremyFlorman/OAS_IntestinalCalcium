@@ -3,7 +3,7 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
- foldername = 'C:\src\OpenAutoScope-v2\data\acr-2HisCat_myo-3GCaMP6\231219_QW2550+30mM-HA\2023_12_19_16_14_05_flircamera_behavior'
+% foldername = 'C:\src\OpenAutoScope-v2\data\test\2024_01_08_15_36_41_flircamera_behavior'
 d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration = 0;
@@ -134,7 +134,7 @@ for i = 1:length(logd)
             if contains(line, 'tracker_behavior received position')
                 locTime = alignEvent(line,time);
                 r = regexp(line,' ', 'split');
-                r = regexp(r{end}, '\d+', 'match');
+                r = regexp(r{end}, '(-?\d+)', 'match');
                 xl = str2double(r{1})*mmPerStep; % X coordinate in mm units
                 yl = str2double(r{2})*mmPerStep; % Y coordinate in mm units
 

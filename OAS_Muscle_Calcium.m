@@ -1,5 +1,5 @@
-fld = 'C:\src\OpenAutoScope-v2\data\acr-2HisCat_myo-3GCaMP6\231219_QW2550+3 0mM-HA'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\HisCat\acr-2HiscatMyo-3GCaMP6\QW2550_0mM-HA';  % upload everything to this location.
+fld = 'C:\src\OpenAutoSCope-v2\data\TrainingData\240207_QW135_L4_10x'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\TrainingData\QW135_L4_10x';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.
@@ -28,7 +28,7 @@ removevignette = 30; % if not zero, size of kernel to use for flatfield correcti
 
 axSigLen = 200; % how many pixels to use for registering axial signal.
 axSigHeight = 20; % how many pixels to use sample perpindicular to the midline.
-saveAxialMatrix = 0;
+saveAxialMatrix = 1;
 seg = 40:60; % what pixels to sample for different muscle quadrents
 axialColorLimits = [0 100];
 
@@ -143,7 +143,7 @@ for nf =startIndex:length(imgDir)
     wormIdx = [];
 
     if saveAxialMatrix == 1
-        axialMatrix = NaN(axSigHeight, axSigLen,length(info)/2);
+        axialMatrix = NaN(axSigHeight, axSigLen,nFrames);
     end
 
 
@@ -241,7 +241,6 @@ for nf =startIndex:length(imgDir)
                 outline = bwmorph(mask, 'remove',1);
                 %             skel = bwskel(mask,'MinBranchLength', 20);
                 skel = bwmorph(mask,'thin', inf);
-
                 outskel = logical(outline+skel);
                 [ep] = bwmorph(skel,'endpoints');
 
@@ -333,6 +332,7 @@ for nf =startIndex:length(imgDir)
                         if leftMean<rightMean
                             tt = fliplr(tt);
                             temptrace = rot90(temptrace,2);
+                            tempbf = rot90(tempbf,2);
 
                         end
                         % % % % % % % % % % % % % % % % % % % %
@@ -616,6 +616,8 @@ for nf =startIndex:length(imgDir)
     wormdata.include = 1;
     wormdata.stimTimes = stimTimes;
     wormdata.velocity = h5Data.velocity;
+    wormdata.xLoc = h5Data.xLoc;
+    wormdata.yLoc = h5Data.yLoc;
 
     save(datasavename, 'wormdata')
 
@@ -716,7 +718,11 @@ for nf =startIndex:length(imgDir)
 
     % % % Worm Track % % % 
     nexttile([1 1])
-    scatter(h5Data.xLoc, h5Data.yLoc, 1, jet(length(h5Data.yLoc)))
+    mx = mean(h5Data.xLoc,'omitnan');
+    my = mean(h5Data.yLoc,'omitnan');
+    scatter(h5Data.xLoc-mx, h5Data.yLoc-my, 1, jet(length(h5Data.yLoc)))
+    xlim([-10 10]);
+    ylim([-10 10]);
     % % % Peak Widths % % %
 %     nexttile([1 1])
 %     histogram(w./fps,'BinEdges', 1:15);

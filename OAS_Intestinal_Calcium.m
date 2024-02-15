@@ -1,5 +1,5 @@
-fld = 'C:\src\OpenAutoScope-v2\data\5-HT\231212_zfis178_inx-16+5HT'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\OAS\5-HT\+5-HT\inx-16+5HT';  % upload everything to this location.
+fld = 'C:\src\OpenAutoSCope-v2\data\myo-2GFP_autofocusTest'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\myo-2GFP_autofocusTest';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.
@@ -287,7 +287,7 @@ for nf =startIndex:length(imgDir)
                         leftMean = mean(tt(1:querryLength),'omitnan');
                         rightMean = mean(tt(length(tt)-querryLength:length(tt)),'omitnan');
 
-                        if leftMean>rightMean
+                        if leftMean<rightMean
                             tt = fliplr(tt);
                             abf = fliplr(abf);
                         end
@@ -395,7 +395,7 @@ for nf =startIndex:length(imgDir)
                                 'Box', 'off');
                         % axial signal
                         elseif showAxialSignal == 1
-                            axsig = smoothdata(axialSignal(1:i,:),1,'gaussian',60)'-median(backgroundSignal(1:i),'omitnan');
+                            axsig = smoothdata(axialSignal(1:i,:),1,'gaussian',10)'-median(backgroundSignal(1:i),'omitnan');
                             imagesc(axsig,'Parent',ax4)
                             ax4.CLim = [0 100];
                             ax4.XLim = [1, length(axialSignal)];

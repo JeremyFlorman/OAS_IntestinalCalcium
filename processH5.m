@@ -8,7 +8,8 @@ d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration = 0;
 videostuff = 0;
-mmPerStep = 0.001253814;
+mmPerStep = 0.001253814; % calibration for gcamp + behavior tracker
+% mmPerStep = 0.001307092; % calibration for OAS behavior-only tracker
 
 translation = [0 -4 0];  %230926[-5 13 0];
 

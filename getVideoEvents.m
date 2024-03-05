@@ -16,7 +16,7 @@ wormX = nan(length(videotimes),1);
 wormY = nan(length(videotimes),1);
 % mmPerStep = 0.001307092; % for OAS behavior-only tracker
 mmPerStep = 0.001253814; % for OAS gcamp+behavior tracker
-fps=15; 
+fps=15;
 stimnum = 1;
 
 
@@ -48,7 +48,7 @@ for i =1:length(logd)
             end
 
             if contains(line, 'DO _teensy_commands_set_led o 1')
-                stimidx(stimnum) = alignEvent(line,videotimes);               
+                stimidx(stimnum) = alignEvent(line,videotimes);
                 stimnum = stimnum+1;
             end
 
@@ -61,13 +61,13 @@ for i =1:length(logd)
 
             end
 
-                
-                
+
+
         end
     end
 end
 
- 
+
 
 Stimuli.stimtimes = videotimes(stimidx);
 Stimuli.stim_xLoc = xLoc(stimidx);
@@ -75,7 +75,7 @@ Stimuli.stim_yLoc = yLoc(stimidx);
 Stimuli.stim_xSteps = xSteps(stimidx);
 Stimuli.stim_ySteps = ySteps(stimidx);
 
-velocity =NaN(length(videotimes),1); 
+velocity =NaN(length(videotimes),1);
 
 for i = 2:length(xLoc)-(fps+1)
     dx = xLoc(i)-xLoc(i+fps); %change in xLoc per second
@@ -92,6 +92,8 @@ videoEvents.yLoc = yLoc;
 videoEvents.xSteps = xSteps;
 videoEvents.ySteps = ySteps;
 videoEvents.videotimes = videotimes;
+videoEvents.wormX = wormX;
+videoEvents.wormY = wormY;
 videoEvents.folder = h5Folder;
 spltnm = strsplit(h5Folder, '\');
 outname = [h5Folder '\' spltnm{end} '_videoEvents.mat'];

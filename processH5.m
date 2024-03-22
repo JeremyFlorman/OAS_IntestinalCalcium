@@ -3,7 +3,7 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
-% foldername = 'C:\src\OpenAutoScope-v2\data\test\2024_01_08_15_36_41_flircamera_behavior'
+% foldername = 'C:\src\OpenAutoScope-v2_20240205_1502\data\myo-2HisCL\-HA\240321_zfis178_myo-2HisCl-HA\2024_03_21_11_23_18_flircamera_behavior'
 d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration = 0;
@@ -11,7 +11,7 @@ videostuff = 0;
 mmPerStep = 0.001253814; % calibration for gcamp + behavior tracker
 % mmPerStep = 0.001307092; % calibration for OAS behavior-only tracker
 
-translation = [0 -4 0];  %230926[-5 13 0];
+translation = [0 -1 0];  %230926[-5 13 0];
 
 
 for i = 1:length(d)

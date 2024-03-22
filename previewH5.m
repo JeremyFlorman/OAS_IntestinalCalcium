@@ -8,7 +8,6 @@ function [] = previewH5(h5Folder)
 % figure();
 % for i = 1:length(d)
 h5File = fullfile(fp,fn);
-
 info = h5info(h5File, '/data');
 h5size = info.Dataspace.Size;
 

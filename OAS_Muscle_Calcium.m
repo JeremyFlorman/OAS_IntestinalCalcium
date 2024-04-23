@@ -1,11 +1,11 @@
-fld = 'C:\src\OpenAutoSCope-v2\data\TrainingData\240207_QW135_L4_10x'; % Folder containing the data you want to analyze
+fld = 'C:\src\OpenAutoScope-v2_20240205_1502\data\Eli\032724_WT_L4_2hr_injured'; % Folder containing the data you want to analyze
 serverfolder = 'Z:\OAS\TrainingData\QW135_L4_10x';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.
 startframe =1; % what frame to begin analysis
 
-uploadresults = 1; % upload data to remote location (serverfolder)?
+uploadresults = 0; % upload data to remote location (serverfolder)?
 isremote = 0;    % is our tiff file on the server? If so, we'll copy to local
 % folder to run the analysis then move the results to the
 % server.
@@ -29,8 +29,8 @@ removevignette = 30; % if not zero, size of kernel to use for flatfield correcti
 axSigLen = 200; % how many pixels to use for registering axial signal.
 axSigHeight = 20; % how many pixels to use sample perpindicular to the midline.
 saveAxialMatrix = 1;
-seg = 40:60; % what pixels to sample for different muscle quadrents
-axialColorLimits = [0 100];
+seg = 40:axSigLen; % what pixels to sample for different muscle quadrents
+axialColorLimits = [20 100];
 
 %%
 imgDir = dir([fld '\**\*behavior\*.h5']);
@@ -42,7 +42,7 @@ for nf =startIndex:length(imgDir)
 
     if isremote == 1
         tic
-        [fold, nm, ~] = fileparts(path)
+        [fold, nm, ~] = fileparts(path);
         tempfolder = 'C:\tmp'; %set temp directory for copying h5 files.
         tempbehavior = [tempfolder '\' nm];
         tempgcamp = strrep(tempbehavior,'behavior', 'gcamp');
@@ -61,7 +61,7 @@ for nf =startIndex:length(imgDir)
     else
 
 
-        [fold, nm, ~] = fileparts(path);
+        [fold, nm, ~] = fileparts(path)
         protopath = regexp(fold,'\', 'split');
         expSuffix = [protopath{end} '_' num2str(nf)];
         protosavename = [fold '\' expSuffix];

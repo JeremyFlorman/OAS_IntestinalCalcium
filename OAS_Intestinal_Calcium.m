@@ -1,5 +1,5 @@
-fld = 'C:\src\OpenAutoScope-v2_20240205_1502\data\myo-2HisCL\+HA\240321_zfis178_myo-2HisCl+HA'; % Folder containing the data you want to analyze
-serverfolder = 'Z:\OAS\5-HT\+Food\myo-2HisCL+Food+HA';  % upload everything to this location.
+fld = 'C:\src\OpenAutoScope-v2_20240205_1502\data\tap\240422_zfis178_daf-2+Tap'; % Folder containing the data you want to analyze
+serverfolder = 'Z:\OAS\Tap\daf-2+Tap';  % upload everything to this location.
 
 %% settings
 startIndex = 1; % which video to start analysis.
@@ -22,7 +22,7 @@ crop = 1; % num pixels to crop from image edge. set to 0 for no cropping.
 minwormarea = 10000; %lower limit to worm area
 maxwormarea = 20000; % upper limit to worm area
 axSigLen = 200; % how many pixels to use for registering axial signal.
-axSigOrientation = 1; % 0=brighter signal on bottom, 1=brighter signal on top
+axSigOrientation = 0; % 0=brighter signal on bottom, 1=brighter signal on top
 
 useautothreshold = 1;% set to 1 to calculate a threshold for each image.
 useadaptivethreshold = 0; % if useautothreshold is set to 0 adaptive thresholding can be used

@@ -1,9 +1,11 @@
 // this constant won't change:
-const int inputPin = 2;  // the pin that the input voltage is attached to
-int outPin = 11;         // pin 10 = tap; pin 11 = opto
+const int inputPin = 2;                // the pin that the input voltage is attached to
+int outPin = 11;                       // pin 10 = tap; pin 11 = opto
+int pulseDur = 35;                     // duration of individual pulses in ms
+int hz = 1;                           // frequency (pulses per second)
+int offTime = (1000 / hz) - pulseDur;  // ammount of time LED is off between pulses
 
-// tap settings: outPin 10, pulseNumber 3, pulseDuration 10
-// optoSettings: outPin 11, pulseNumber 3, pulseDuration 10
+int stimDur = 310;  // how long the stimulation lasts in seconds
 
 
 // Variables will change:
@@ -14,6 +16,7 @@ void setup() {
   // initialize the input pin as a input: (not really necessary as the default is INPUT
   pinMode(inputPin, INPUT);
   pinMode(outPin, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -31,11 +34,14 @@ void loop() {
     // do the stuff that a HIGH input triggers
     // *****************************************
 
-
-    digitalWrite(outPin, HIGH);
-    // delay(80);
-    // digitalWrite(outPin, LOW);
-    // delay(20);
+    for (int i = 0; i < stimDur * hz; i++) {
+      digitalWrite(outPin, HIGH);
+      digitalWrite(LED_BUILTIN, HIGH);
+      delay(pulseDur);
+      digitalWrite(outPin, LOW);
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(offTime);
+    }
 
 
 

@@ -3,10 +3,10 @@ const int  inputPin = 2;    // the pin that the input voltage is attached to
 int outPin = 10;  // pin 10 = tap; pin 11 = opto 
 int pulseNumber = 3; //75 for opto; 20 for tap
 int loopNumber = 1;
-float pulseDuration = 10;
+float pulseDuration = 10; 
 
 // tap settings: outPin 10, pulseNumber 3, pulseDuration 10
-// optoSettings 
+// optoSettings: outPin 11, pulseNumber 3, pulseDuration 10 
 
 
 // Variables will change:

@@ -1,7 +1,7 @@
 // this constant won't change:
 const int  inputPin = 2;    // the pin that the input voltage is attached to
-int outPin = 10;  // pin 10 = tap; pin 11 = opto 
-int pulseNumber = 3; //75 for opto; 20 for tap
+int outPin = 11;  // pin 10 = tap; pin 11 = opto 
+int pulseNumber = 3; //75 for opto; 3 for tap
 int loopNumber = 1;
 
 
@@ -57,7 +57,9 @@ void loop()
           digitalWrite(outPin, LOW);
           delay(offtime);
         }
+        if (loopNumber>1){
          delay(loopInterval);
+        }
       }
     
 

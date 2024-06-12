@@ -3,7 +3,7 @@
 int outPin = 10;  // pin 10 = tap; pin 11 = opto 
 
 int loopNumber = 1;
-long initialDelay = 1800000;
+long initialDelay = 1000;
 long loopInterval = 3000;
 int loopCount = 0;
 

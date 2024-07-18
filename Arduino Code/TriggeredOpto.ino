@@ -1,59 +1,52 @@
 // this constant won't change:
-const int inputPin = 2;                // the pin that the input voltage is attached to
-int outPin = 11;                       // pin 10 = tap; pin 11 = opto
-int pulseDur = 35;                     // duration of individual pulses in ms
-int hz = 1;                           // frequency (pulses per second)
-int offTime = (1000 / hz) - pulseDur;  // ammount of time LED is off between pulses
+// const int  inputPin = 2;    // the pin that the input voltage is attached to
+int loopCount = 0;
+int outPin = 10;  // pin 10 = tap; pin 11 = opto 
 
-int stimDur = 310;  // how long the stimulation lasts in seconds
+int repeatNumber = 1;
+long initialDelay = 900000;
+long loopInterval = 5000;
 
 
-// Variables will change:
-int inputState = 0;      // current state of the input
-int lastInputState = 0;  // previous state of the input
 
-void setup() {
-  // initialize the input pin as a input: (not really necessary as the default is INPUT
-  pinMode(inputPin, INPUT);
-  pinMode(outPin, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(9600);
+int pulseNumber = 3; //# of taps in tap-train
+float dutyCycle = 0.3; 
+int interval = 50; // duty cycle duration
+
+
+float ontime = dutyCycle*interval;
+float offtime = interval-ontime;
+
+// tap settings: outPin 10, pulseNumber 3, pulseDuration 10
+// optoSettings: outPin 11, pulseNumber 3, pulseDuration 10 
+
+
+
+
+void setup()
+{
+pinMode(outPin, OUTPUT);
+Serial.begin(9600);
+Serial.println("start!");
 }
 
 
-void loop() {
-  // read the input pin:
-  inputState = digitalRead(inputPin);
-
-  if (inputState == HIGH) {
-    // if the current state is HIGH then the input
-    // went from not high to high:
-    //Serial.println("Went high");
-
-    // *****************************************
-    // do the stuff that a HIGH input triggers
-    // *****************************************
-
-    for (int i = 0; i < stimDur * hz; i++) {
+void loop()
+{
+  
+  delay(initialDelay);
+  
+  
+      
+  while (loopCount < repeatNumber){
+    for (int i = 0; i < pulseNumber; i++){
       digitalWrite(outPin, HIGH);
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(pulseDur);
+      delay(ontime);
       digitalWrite(outPin, LOW);
-      digitalWrite(LED_BUILTIN, LOW);
-      delay(offTime);
+      delay(offtime);
     }
-
-
-
-
-  } else {
-    // if the current state is LOW then the input
-    // went from high to not high: do nothing except print something if you want.
-    //Serial.println("Went low");
-    digitalWrite(outPin, LOW);
+    loopCount = loopCount+1;
+    delay(loopInterval);
   }
-
-  // save the current state as the last state,
-  //for next time through the loop
-  lastInputState = inputState;
+  
 }

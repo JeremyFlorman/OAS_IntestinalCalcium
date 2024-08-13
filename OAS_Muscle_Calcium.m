@@ -1,4 +1,4 @@
-fld = 'C:\src\OpenAutoScope-v2_20240205_1502\data\Eli\032724_WT_L4_2hr_injured'; % Folder containing the data you want to analyze
+fld = 'C:\Users\Administrator\Desktop\deadworms_JustKidding'; % Folder containing the data you want to analyze
 serverfolder = 'Z:\OAS\TrainingData\QW135_L4_10x';  % upload everything to this location.
 
 %% settings
@@ -12,24 +12,24 @@ isremote = 0;    % is our tiff file on the server? If so, we'll copy to local
 
 plotstuff = 1; % display tracking
 videostuff =1; % record video
-framerate = 1; % display video/plots every Nth iteration of loop.
-fps = 15;      % frames per sec of input tiff.
+framerate = 20; % display video/plots every Nth iteration of loop.
+fps = 20;      % frames per sec of input tiff.
 troubleshoot =0; % show binary images instead of0 regular plots
 showNormals = 1;
 showAxialSignal = 1;
 
 crop = 1; % num pixels to crop from image edge. set to 0 for no cropping.
 minwormarea = 10000; %lower limit to worm area
-maxwormarea = 20000; % upper limit to worm area
+maxwormarea = 100000; % upper limit to worm area
 
 useautothreshold = 1;% set to 1 to calculate a threshold for each image.
 useadaptivethreshold = 0; % if useautothreshold is set to 0 adaptive thresholding can be used
 removevignette = 30; % if not zero, size of kernel to use for flatfield correction.
 
-axSigLen = 200; % how many pixels to use for registering axial signal.
-axSigHeight = 20; % how many pixels to use sample perpindicular to the midline.
-saveAxialMatrix = 1;
-seg = 40:axSigLen; % what pixels to sample for different muscle quadrents
+axSigLen = 500; % how many pixels to use for registering axial signal.
+axSigHeight = 30; % how many pixels to use sample perpindicular to the midline.
+saveAxialMatrix = 0;
+seg = 1:axSigLen; % what pixels to sample for different muscle quadrents
 axialColorLimits = [20 100];
 
 %%
@@ -184,16 +184,28 @@ for nf =startIndex:length(imgDir)
         BW = bwmorph(BW,'clean');
         BW = bwmorph(BW,'fill');
 
+        BW = imerode(BW,strel('disk',1));
+
 
         tempb = BW;
-        BW = imdilate(BW,strel('disk',7));
-        BW = imerode(BW,strel('disk',7));
+        BW = imdilate(BW,strel('disk',12));
+        BW = imfill(BW,'holes');
+        BW = imerode(BW,strel('disk',12));
 
         %         BW = imerode(BW,strel('disk',7));
         %         B =bwmorph(B,'open',1);
 
 
         tempb2 = BW;
+
+        if troubleshoot == 1
+            imshow(tempb,'Parent', ax2);
+            title(ax2,'Initial Threshold');
+
+            imshow(tempb2,'Parent', ax3);
+            title(ax3,'Processed Mask');
+        end
+
 
         % identify connected objects
         CC = bwconncomp(BW);
@@ -222,7 +234,7 @@ for nf =startIndex:length(imgDir)
                 disp(['segmentation error at frame: ' num2str(i)]);
                 wormIdx = centralIdx;
             else
-                wormIdx = [];
+                wormIdx = bigIdx;
             end
 
             % create a copy of the label matrix Lw that contains only the worm.

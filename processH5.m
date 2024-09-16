@@ -3,7 +3,7 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
-% foldername = 'C:\src\OpenAutoScope-v2_20240205_1502\data\tap\240422_zfis178_daf-2+Tap\2024_04_22_12_50_18_flircamera_behavior'
+% foldername = 'C:\src\OpenAutoScope-v2_20240205_1502\data\noFood+OP50-SNT\240916_zfis178_noFood+LB\2024_09_16_13_01_43_flircamera_behavior'
 d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration = 0;
@@ -11,7 +11,7 @@ videostuff = 0;
 mmPerStep = 0.001253814; % calibration for gcamp + behavior tracker
 % mmPerStep = 0.001307092; % calibration for OAS behavior-only tracker
 
-translation = [-2 -2 0];  %230926[-5 13 0];
+translation = [-5 -4 0];  %230926[-5 13 0];
 
 
 for i = 1:length(d)
@@ -76,7 +76,7 @@ if registerImage == 1
 
     if showRegistration == 1
         figure()
-        for j = 1:length(gfp)
+        for j = 1850:length(gfp)
             imshowpair(bf(:,:,j) ,gfp(:,:,j))
             text(20,20, ['Time: ' num2str(round(time(j)-starttime,2)) ' sec'])
             %             pause(0.0001)

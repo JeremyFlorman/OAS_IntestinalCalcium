@@ -1,11 +1,11 @@
-folder = 'C:\src\OpenAutoScope-v2_20240205_1502\data\QW135_TrainingData\UnannotatedFrames\240307_QW135_Adult_ThickLawn_10x_unannotated';
-gch5 = dir([folder '\*gcamp']);
-radius = 15;
+folder = 'C:\src\OpenAutoScope-v2_20240205_1502\data\myo-2_ReaChR\240606_myo-2-ReaChR_4hz_10x';
+gch5 = dir([folder '\*behavior']);
+radius = 5;
 showimage =1;
 recordVideo = 1;
 
 
-for folderIdx = 2:length(gch5)
+for folderIdx = 1:length(gch5)
     %%% get tracking coordinates from videoEvents %%%
     h5fp = fullfile(gch5(folderIdx).folder,gch5(folderIdx).name);
     [events] = getVideoEvents(h5fp);
@@ -42,7 +42,7 @@ for folderIdx = 2:length(gch5)
         signal = nan(length(h5dir)*3600,1);
         time =linspace(0, length(h5dir)*3600/900,length(h5dir)*3600);
 
-        for sliceIdx = 1:h5size(3)
+        for sliceIdx = 1:h5size(3)-1
             x = events.wormX(frameIdx);
             y = events.wormY(frameIdx);
             img = h5read(h5File, '/data',[1 1 sliceIdx],[h5size(1),h5size(2),1]);

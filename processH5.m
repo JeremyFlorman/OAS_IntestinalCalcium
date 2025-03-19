@@ -3,7 +3,7 @@ function [h5Data] = processH5(foldername)
 %   Detailed explanation goes here
 % foldername = 'C:\src\OpenAutoScope-v2\data\zfis178';
 
-% foldername = 'C:\src\OpenAutoScope-v2_20240205_1502\data\noFood_longDuration\250102_zfis178_unc-43(sa200)-noFoodLD\2025_01_02_12_34_55_flircamera_behavior'
+% foldername = 'C:\src\OpenAutoScope-v2_20240205_1502\data\PHB\DA-Lactate2OP50\250312_zfis178_DA-Lactate2OP50\2025_03_12_15_55_34_flircamera_behavior';
 d = dir([foldername '\*.h5']);
 registerImage = 1;
 showRegistration =0;
@@ -11,7 +11,7 @@ videostuff = 0;
 mmPerStep = 0.001253814; % calibration for gcamp + behavior tracker
 % mmPerStep = 0.001307092; % calibration for OAS behavior-only tracker
 
-translation = [1 -3 0];
+translation = [0 0 0];
 
 
 for i = 1:length(d)
@@ -49,22 +49,22 @@ for i = 1:length(d)
     end
 
     idx = idx(~isnan(idx));
-    tempbf = bData(:,:,1:length(idx));
-    tempgfp = gData(:,:,idx);
-    temptime = bTimes(1:length(idx));
+    % tempbf = bData(:,:,1:length(idx));
+    % tempgfp = gData(:,:,idx);
+    % temptime = bTimes(1:length(idx));
     if i == 1
-        starttime = temptime(1);
+        starttime = bTimes(1);
     end
 
 
     if i == 1
-        bf = tempbf;
-        gfp = tempgfp;
-        time = temptime;
+        bf = bData(:,:,1:length(idx));
+        gfp = gData(:,:,idx);
+        time = bTimes(1:length(idx));
     elseif i>1
-        bf = cat(3,bf,tempbf);
-        gfp = cat(3,gfp, tempgfp);
-        time = cat(1,time, temptime);
+        bf = cat(3,bf,bData(:,:,1:length(idx)));
+        gfp = cat(3,gfp, gData(:,:,idx));
+        time = cat(1,time, bTimes(1:length(idx)));
     end
 
 end
@@ -93,7 +93,7 @@ end
 %% process log file
 [fld, ~, ~]=fileparts(foldername);
 logd = dir([fld '\*.txt']);
-acq = 0; % acquires log data within recording range when set to 1;
+acq = 0; % acquires log data within recording range when true;
 stimTimes = [];
 xLoc = NaN(length(time),1);
 yLoc = NaN(length(time),1);
@@ -117,7 +117,7 @@ for i = 1:length(logd)
             end
         end
 
-        % stop acquisition when recording ends
+        % stop reading log when recording ends
         if lTime>max(time)
             disp(line)
             acq = 0;
@@ -139,22 +139,24 @@ for i = 1:length(logd)
                 xl = str2double(r{1})*mmPerStep; % X coordinate in mm units
                 yl = str2double(r{2})*mmPerStep; % Y coordinate in mm units
 
-                % % check for crossing origin % % 
-                if abs(xl)<0.01
-                    if abs(xl)-abs(xLoc(locTime-1,1))>=0
-                        xflip = xflip*-1;
-                    end
-                end
+                % % % check for crossing origin % % 
+                % if abs(xl)<0.01
+                %     xl
+                %     locTime
+                %     if abs(xl)-abs(xLoc(locTime-1,1))>=0
+                %         xflip = xflip*-1
+                %     end
+                % end
 
-                if abs(yl)<0.01
-                    if abs(yl)-abs(yLoc(locTime-1,1))>=0
-                    yflip = yflip*-1;
-                    end
-                end
-                
+                % if abs(yl)<0.01
+                %     if abs(yl)-abs(yLoc(locTime-1,1))>=0
+                %     yflip = yflip*-1;
+                %     end
+                % end
+                % 
                 % % convert orgin crossings to negative coordinates % % 
-                xLoc(locTime,1) = xl*xflip;
-                yLoc(locTime,1) = yl*yflip;
+                xLoc(locTime,1) = xl;
+                yLoc(locTime,1) = yl;
 
 
 
